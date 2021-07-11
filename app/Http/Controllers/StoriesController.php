@@ -15,4 +15,10 @@ class StoriesController extends Controller
 
         return view('stories.index', ['stories' => $stories ]);
     }
+
+    public function show(Story $story) {
+
+        return view('stories.show', ['story' => $story ]);
+
+    }
 }
