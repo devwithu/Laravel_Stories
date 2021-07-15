@@ -21,7 +21,7 @@ Auth::routes();
 
 //Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Route::get('/', 'Auth\LoginController@showLoginForm');
+//Route::get('/', 'Auth\LoginController@showLoginForm');
 
 
 Route::middleware(['auth'])->group( function (){
@@ -29,3 +29,6 @@ Route::middleware(['auth'])->group( function (){
 //    Route::get('stories/{story}', 'StoriesControllerBackup@show')->name('stories.show');
     Route::resource('stories', 'StoriesController');
 });
+
+Route::get('/', 'DashboardController@index')->name('dashboard.index');
+Route::get('story/{activeStory}', 'DashboardController@show')->name('dashboard.show');
