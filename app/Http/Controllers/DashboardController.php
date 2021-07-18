@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Story;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\NotifyAdmin;
+use App\Mail\NewStoryNotification;
 
 class DashboardController extends Controller
 {
@@ -25,19 +28,32 @@ class DashboardController extends Controller
             ->orderBy('id', 'DESC')
             ->paginate(10);
 
-        return view('dashboard.index', ['stories' => $stories ]);
+        return view('dashboard.index', ['stories' => $stories]);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Story  $story
+     * @param \App\Models\Story $story
      * @return \Illuminate\Http\Response
      */
     public function show(Story $activeStory)
     {
         //
-        return view('dashboard.show', ['story' => $activeStory ]);
+        return view('dashboard.show', ['story' => $activeStory]);
+    }
+
+    public function email()
+    {
+//        Mail::raw('This is the Test Email', function ($message) {
+//            $message->to('admin@lovalhost.com')
+//                ->subject('A new Sotry was Added');
+//        });
+
+        //Mail::to('admin@localhost.com')->send(new NotifyAdmin('Title of the Story'));
+        //Mail::send(new NotifyAdmin('Title of the story'));
+        Mail::send(new NewStoryNotification('Title of the story'));
+
     }
 
 }
