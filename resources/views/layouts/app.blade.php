@@ -58,6 +58,10 @@
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                    <a href="{{ route('stories.index') }}" class="dropdown-item">Stories</a>
+                                    @if( Auth::user()->type == 1 )
+                                    <a href="{{ route('admin.stories.index') }}" class="dropdown-item">Deleted Stories</a>
+                                    @endif
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
