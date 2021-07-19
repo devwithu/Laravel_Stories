@@ -16,6 +16,7 @@
                                 <th>Title</th>
                                 <th>Type</th>
                                 <th>User</th>
+                                <th>Action</th>
                             </tr->
                             </thead>
                             <tbody>
@@ -24,6 +25,20 @@
                                     <td>{{ $story->title }}</td>
                                     <td>{{ $story->type }}</td>
                                     <td>{{ $story->user->name }}</td>
+                                    <td>
+                                        <form action="{{ route('admin.stories.restore', [$story]) }}" method="POST"
+                                              style="display: inline-block">
+                                            @method('PUT')
+                                            @csrf
+                                            <button class="btn btn-danger">Restore</button>
+                                        </form>
+                                        <form action="{{ route('admin.stories.delete', [$story]) }}" method="POST"
+                                              style="display: inline-block">
+                                            @method('DELETE')
+                                            @csrf
+                                            <button class="btn btn-danger">Delete</button>
+                                        </form>
+                                    </td>
                                 </tr>
                             @endforeach
                             </tbody>
