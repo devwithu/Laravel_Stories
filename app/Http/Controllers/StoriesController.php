@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\StoryCreated;
+use App\Events\StoryEdited;
 use App\Mail\NewStoryNotification;
 use App\Models\Story;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoryRequest;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Log;
 
 class StoriesController extends Controller
 {
@@ -55,9 +58,14 @@ class StoriesController extends Controller
 
          $story = auth()->user()->stories()->create($request->all());
 
-        Mail::send(new NewStoryNotification($story->title));
+//        Mail::send(new NewStoryNotification($story->title));
+//        Log::info('A Story with title' . $story->title . ' was added');
+
+        event(new StoryCreated($story->title));
 
         return redirect()->route('stories.index')->with('status', 'Story Created Successfully !');
+
+
         //dd($request->all());
     }
 
@@ -102,6 +110,8 @@ class StoriesController extends Controller
         //
 
         $story->update($request->all());
+
+        event(new StoryEdited($story->title));
 
         return redirect()->route('stories.index')->with('status', 'Story Updated Successfully !');
 
