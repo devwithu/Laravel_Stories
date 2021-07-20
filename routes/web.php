@@ -40,3 +40,11 @@ Route::namespace('Admin')->prefix('admin')->middleware(['auth', \App\Http\Middle
     Route::put('/stories/restore/{id}', 'StoriesController@restore')->name('admin.stories.restore');
     Route::delete('/stories/delete/{id}', 'StoriesController@delete')->name('admin.stories.delete');
 });
+
+Route::get('/image', function (){
+    $imagePath = public_path('storage/unsplash.jpg');
+    $writePath = public_path('storage/thumbnail1.jpg');
+    $img = Image::make($imagePath)->resize(222,100);
+    $img->save($writePath);
+    return $img->response('jpg');
+});

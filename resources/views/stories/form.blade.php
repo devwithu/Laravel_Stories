@@ -53,3 +53,13 @@
     @enderror
 </div>
 
+<div class="form-group">
+    <label for="image">Image</label>
+    <input type="file" name="image" class="form-control @error('image') is-invalid @enderror" />
+    @error('image')
+    <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }} </strong>
+                                </span>
+    @enderror
+</div>
+<td><img src="{{ $story->thumbnail }}" alt="Image"></td>

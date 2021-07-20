@@ -45,9 +45,19 @@ class Story extends Model
         return $this->type . ' Type, Created at ' . date('Y-m-d', strtotime($this->created_at));
     }
 
+    public function getThumbnailAttribute()
+    {
+        if ($this->image) {
+            return asset('storage/' . $this->image);
+        }
+
+        return asset('storage/thumbnail.jpg');
+    }
     public function setTitleAttribute($value)
     {
         $this->attributes['title'] = $value;
         $this->attributes['slug'] = Str::slug($value);
     }
+
+
 }
