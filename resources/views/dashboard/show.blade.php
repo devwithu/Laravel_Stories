@@ -11,8 +11,18 @@
                     </div>
 
                     <div class="card-body">
-                        {{ $story->body }}
-                        <p class="font-italic">{{ $story->footnote }}</p>
+{{--                        {{ $story->body }}--}}
+{{--                        <p class="font-italic">{{ $story->footnote }}</p>--}}
+
+                        <img class="card-img-top" src="{{ $story->thumbnail}}" alt="Card image cap">
+
+                        <p class="card-text">{{ $story->body }}</p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-sm btn-outline-secondary">{{$story->user->name}}</button>
+                            </div>
+                            <small class="text-muted">{{ $story->type}}</small>
+                        </div>
                     </div>
                 </div>
             </div>
