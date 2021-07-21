@@ -29,6 +29,10 @@ class Story extends Model
         return $this->belongsTo(\App\Models\User::class);
     }
 
+    public function tags() {
+        return $this->belongsToMany(\App\Models\Tag::class);
+    }
+
     protected static function booted()
     {
 //        static::addGlobalScope('active', function (Builder $builder) {

@@ -18,6 +18,7 @@
                             <tr->
                                 <th>Title</th>
                                 <th>Type</th>
+                                <th>Tags</th>
                                 <th>Status</th>
                                 <th>Action</th>
                             </tr->
@@ -27,6 +28,11 @@
                                     <tr>
                                         <td>{{ $story->title }}</td>
                                         <td>{{ $story->type }}</td>
+                                        <td>
+                                            @foreach($story->tags as $tag)
+                                                {{ $tag->name }}
+                                            @endforeach
+                                        </td>
                                         <td>{{ $story->status == 1 ? 'Yes' : 'No' }}</td>
                                         <td>
                                             @can('view', $story)

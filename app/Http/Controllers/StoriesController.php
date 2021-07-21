@@ -6,6 +6,7 @@ use App\Events\StoryCreated;
 use App\Events\StoryEdited;
 use App\Mail\NewStoryNotification;
 use App\Models\Story;
+use App\Models\Tag;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoryRequest;
 use Illuminate\Support\Facades\Gate;
@@ -30,6 +31,7 @@ class StoriesController extends Controller
     {
         //
         $stories = Story::where('user_id', auth()->user()->id)
+            ->with('tags')
             ->orderBy('id', 'DESC')
             ->paginate();
 
@@ -45,7 +47,14 @@ class StoriesController extends Controller
     {
         //
         $story = new Story;
-        return view('stories.create', ['story' => $story]);
+        $tags = Tag::get();
+        return view(
+            'stories.create',
+            [
+                'story' => $story,
+                'tags' => $tags
+            ]
+        );
     }
 
     /**
@@ -65,6 +74,9 @@ class StoriesController extends Controller
         if ($request->hasFile('image')) {
             $this->_uploadImage($request, $story);
         }
+
+
+        $story->tags()->sync($request->tags);
 
         event(new StoryCreated($story->title));
 
@@ -97,8 +109,10 @@ class StoriesController extends Controller
         //Gate::authorize('edit-story', $story);
         //$this->authorize('update', $story);
 
+        $tags = Tag::get();
         return view('stories.edit', [
             'story' => $story,
+            'tags' => $tags
 
         ]);
     }
