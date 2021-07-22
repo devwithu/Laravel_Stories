@@ -44,4 +44,8 @@ class User extends Authenticatable
     public function stories() {
         return $this->hasMany(\App\Models\Story::class);
     }
+
+    public function profile() {
+        return $this->hasOne(\App\Models\Profile::class);
+    }
 }

@@ -59,6 +59,7 @@
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                    <a href="{{ route('profiles.edit') }}" class="dropdown-item">Edit Profile</a>
                                     <a href="{{ route('stories.index') }}" class="dropdown-item">Stories</a>
                                     @if( Auth::user()->type == 1 )
                                     <a href="{{ route('admin.stories.index') }}" class="dropdown-item">Deleted Stories</a>
