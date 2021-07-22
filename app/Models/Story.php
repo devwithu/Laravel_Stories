@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Events\StoryCreated;
+use App\Events\StoryEdited;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -39,6 +41,14 @@ class Story extends Model
 //        static::addGlobalScope('active', function (Builder $builder) {
 //            $builder->where('status', 1);
 //        });
+
+        static::created(function ($story) {
+            event(new StoryCreated($story->title));
+        });
+
+        static::updated(function ($story) {
+            event(new StoryEdited($story->title));
+        });
     }
 
     public function getTitleAttribute($value) {
