@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
@@ -63,5 +64,15 @@ class Story extends Model
         $this->attributes['slug'] = Str::slug($value);
     }
 
+    public function scopeActive($query)
+    {
+        return $query->where('status', 1);
+    }
 
+    public function scopeWhereCreatedThisMonth($query)
+    {
+        $startDate = Carbon::now()->startOfMonth();
+        $endDate = Carbon::now()->endOfMonth();
+        return $query->whereBetween('created_at', [$startDate, $endDate]);
+    }
 }

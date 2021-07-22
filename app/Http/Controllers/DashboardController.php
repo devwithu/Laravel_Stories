@@ -19,7 +19,9 @@ class DashboardController extends Controller
     public function index()
     {
         //DB::enableQueryLog();
-        $query = Story::where('status', 1);
+        //$query = Story::where('status', 1);
+        $query = Story::active();
+
         $type = request()->input('type');
         if (in_array($type, ['short', 'long'])) {
             $query->where('type', $type);

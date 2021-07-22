@@ -42,4 +42,11 @@ class StoriesController extends Controller
 
     }
 
+    public function stats()
+    {
+        $stories = Story::active()->whereCreatedThisMonth()->with('user')->paginate(9);
+        return view('admin.stories.stats', [
+            'stories' => $stories
+        ]);
+    }
 }
